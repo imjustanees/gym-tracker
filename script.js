@@ -6,13 +6,24 @@ const repsInput = document.getElementById("reps");
 const weightInput = document.getElementById("weight");
 const exerciseList = document.getElementById("exercise-list");
 const exerciseCount = document.getElementById("exercise-count");
+const saveButton = document.getElementById("save-exercise");
+const cancelEditButton = document.getElementById("cancel-edit");
 
+let editingExercise = null;
 const exercises = JSON.parse(
     localStorage.getItem("gym-exercises") || "[]"
 );
 
 function saveExercises() {
     localStorage.setItem("gym-exercises", JSON.stringify(exercises));
+}
+
+function resetForm() {
+    editingExercise = null;
+    form.reset();
+    saveButton.textContent = "Save exercise";
+    cancelEditButton.hidden = true;
+    exerciseInput.focus();
 }
 
 function renderExercises() {
@@ -35,12 +46,35 @@ function renderExercises() {
         item.textContent =
             `${dateLabel} — ${exercise.name}: ` +
             `${exercise.sets} sets × ${exercise.reps} reps at ${exercise.weight} kg`;
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.textContent = "Edit";
+        editButton.setAttribute("aria-label", `Edit ${exercise.name}`);
+
+        editButton.addEventListener("click", function () {
+            editingExercise = exercise;
+
+            exerciseInput.value = exercise.name;
+            dateInput.value = exercise.date;
+            setsInput.value = exercise.sets;
+            repsInput.value = exercise.reps;
+            weightInput.value = exercise.weight;
+
+            saveButton.textContent = "Update exercise";
+            cancelEditButton.hidden = false;
+            exerciseInput.focus();
+        });
+
+        item.append(" ", editButton);
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
         deleteButton.setAttribute("aria-label", `Delete ${exercise.name}`);
 
         deleteButton.addEventListener("click", function () {
+            if (editingExercise === exercise) {
+                resetForm();
+            }
             exercises.splice(index, 1);
             saveExercises();
             renderExercises();
@@ -73,18 +107,24 @@ form.addEventListener("submit", function (event) {
         return;
     }
 
-    exercises.push({
+    const entry = {
         name: name,
         date: date,
         sets: sets,
         reps: reps,
         weight: weight
-    });
+    };
+
+    if (editingExercise === null) {
+        exercises.push(entry);
+    } else {
+        Object.assign(editingExercise, entry);
+    }
 
     saveExercises();
     renderExercises();
-    form.reset();
-    exerciseInput.focus();
+    resetForm();
 });
 
 renderExercises();
+cancelEditButton.addEventListener("click", resetForm);

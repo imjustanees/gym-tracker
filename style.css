@@ -157,3 +157,13 @@ form button {
         padding: 16px;
     }
 }
+
+#cancel-edit {
+    border: 1px solid #57634c;
+    background: transparent;
+    color: #f3f5ee;
+}
+
+#cancel-edit:hover {
+    background: #353c30;
+}
