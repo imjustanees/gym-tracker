@@ -48,6 +48,7 @@ function renderExercises() {
             `${exercise.sets} sets × ${exercise.reps} reps at ${exercise.weight} kg`;
         const editButton = document.createElement("button");
         editButton.type = "button";
+        editButton.classList.add("edit-button");
         editButton.textContent = "Edit";
         editButton.setAttribute("aria-label", `Edit ${exercise.name}`);
 
@@ -68,6 +69,7 @@ function renderExercises() {
         item.append(" ", editButton);
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
+        deleteButton.classList.add("delete-button");
         deleteButton.textContent = "Delete";
         deleteButton.setAttribute("aria-label", `Delete ${exercise.name}`);
 

@@ -133,12 +133,24 @@ form button {
 #exercise-list button {
     flex-shrink: 0;
     padding: 10px 16px;
-    border: 1px solid #c57777;
     background: transparent;
+}
+
+#exercise-list .edit-button {
+    border: 1px solid #c3f85c;
+    color: #c3f85c;
+}
+
+#exercise-list .edit-button:hover {
+    background: #2e3b1c;
+}
+
+#exercise-list .delete-button {
+    border: 1px solid #c57777;
     color: #ffb4b4;
 }
 
-#exercise-list button:hover {
+#exercise-list .delete-button:hover {
     background: #452525;
 }
 
