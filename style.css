@@ -179,3 +179,17 @@ form button {
 #cancel-edit:hover {
     background: #353c30;
 }
+
+.workout-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin: 0;
+}
+
+.workout-summary dd {
+    margin: 0;
+    color: #c3f85c;
+    font-size: 28px;
+    font-weight: 800;
+}

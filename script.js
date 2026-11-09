@@ -26,7 +26,24 @@ function resetForm() {
     exerciseInput.focus();
 }
 
+function renderSummary() {
+    const trainingDates = new Set();
+    let totalSets = 0;
+    let totalReps = 0;
+
+    for (const exercise of exercises) {
+        trainingDates.add(exercise.date);
+        totalSets += exercise.sets;
+        totalReps += exercise.sets * exercise.reps;
+    }
+
+    document.getElementById("training-days").textContent = trainingDates.size;
+    document.getElementById("total-sets").textContent = totalSets;
+    document.getElementById("total-reps").textContent = totalReps;
+}
+
 function renderExercises() {
+    renderSummary();
     exerciseList.replaceChildren();
 
     const count = exercises.length;
